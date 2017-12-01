@@ -21,48 +21,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-	/*@Autowired
-	DataSource dataSource;*/
-	
 
-	
-	
-	
-	/*@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		 auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-		 //auth.authenticationProvider(authenticationProvider());
-	
-		/* auth.jdbcAuthentication().dataSource(dataSource)
-			.passwordEncoder(passwordEncoder())
-			.usersByUsernameQuery("select login,password from user where login=?")
-			.authoritiesByUsernameQuery("select username, role from user_roles22 where username=?");
-		*/
-	//}
-  /* @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService);
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
-    }*/
-	
 	
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 	    web
 	       .ignoring()
-	       .antMatchers("/Detail/**")
-	       .antMatchers("/Detail");
+	       .antMatchers("/Start/**");
 	}
 
-	
-	/*@Override
-	@Bean
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}*/
+
 	
    	@Bean
    	public PasswordEncoder passwordEncoder() {

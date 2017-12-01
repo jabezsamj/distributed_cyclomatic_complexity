@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.springframework</groupId>
-	<artifactId>com_dunamis_lawbooks</artifactId>
+	<artifactId>com_distributed_cyclomatic</artifactId>
 	<version>3.0.0</version>
 	<packaging>jar</packaging>
 
@@ -40,10 +40,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.security.oauth</groupId>
 			<artifactId>spring-security-oauth2</artifactId>
@@ -58,11 +55,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.34</version>
-		</dependency>
+
 
 
 		<dependency>
@@ -95,6 +88,8 @@
 			<artifactId>commons-io</artifactId>
 			<version>1.4</version>
 		</dependency>
+		
+		
 
 
 
@@ -117,6 +112,43 @@
 			<version>1.8</version>
 			<type>jar</type>
 		</dependency>
+		
+		
+		
+        <dependency>
+         <groupId>org.eclipse.jgit</groupId>
+         <artifactId>org.eclipse.jgit</artifactId>
+         <version>4.5.4.201711221230-r</version>
+        </dependency>
+        
+        
+
+         
+         <dependency>
+          <groupId>org.springframework.webflow</groupId>
+         <artifactId>spring-webflow</artifactId>
+         <version>2.4.6.RELEASE</version>
+        </dependency>
+        
+        <dependency>
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-simple</artifactId>
+         <version>1.6.1</version>
+         <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+         <groupId>org.slf4j</groupId>
+         <artifactId>slf4j-api</artifactId>
+         <version>1.7.25</version>
+        </dependency>
+        
+<dependency>
+    <groupId>org.gmetrics</groupId>
+    <artifactId>GMetrics</artifactId>
+    <version>0.7</version>
+</dependency>
+        
 
 	</dependencies>
 
@@ -134,7 +166,15 @@
 			<id>spring-releases</id>
 			<url>https://repo.spring.io/libs-release</url>
 		</repository>
-	</repositories>
+        <repository>
+    <id>Jsch</id>
+    <url>http://jsch.sf.net/maven2/</url>
+</repository>
+	
+	
+    </repositories>
+
+  
 	
 	
 
