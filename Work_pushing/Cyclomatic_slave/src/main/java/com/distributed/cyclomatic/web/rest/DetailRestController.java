@@ -2,7 +2,9 @@ package com.distributed.cyclomatic.web.rest;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.StringTokenizer;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
@@ -48,6 +50,10 @@ public class DetailRestController {
 	int REQUEST_COUNT = 1;
 	int SUBMISSION_COUNT = 1;
 	int i=0;
+	int sencommitCall =0;
+	int calulateAvgCyclomatic =0;
+	
+	Queue<String> workQueue = new LinkedList<String>();
 	
 	public int checkComplexity(File forFile) 
     {
@@ -163,6 +169,7 @@ public class DetailRestController {
 	
 	public int calulateAvgCyclomatic(String commitId)
 	{
+		//System.out.println("Calculate Avg Cyclomatic count: "+ ++calulateAvgCyclomatic);
 		File commitDir = getCommit(commitId);
 		return  getCycloAvgOfEachFile(commitDir);
 	}
@@ -170,8 +177,9 @@ public class DetailRestController {
 	
     public void sendCommit(String value)
     {
+    	//System.out.println("Commit Call: "+ ++sencommitCall);
     	try {
-			URI master_url = new URI ("http://52.18.185.171:8080/RecieveCyclomatic/" + value);
+			URI master_url = new URI ("http://54.72.77.242:8080/RecieveCyclomatic/" + value);
 	    	RestTemplate restTemplate = new RestTemplate();
 	    	restTemplate.postForLocation(master_url, String.class);
 	        System.out.println("SUBMISSION_COUNT: " + SUBMISSION_COUNT++);
@@ -182,6 +190,16 @@ public class DetailRestController {
     }
 	
     
+    public void startWork()
+    {
+    	do{
+        String commitId = workQueue.remove();
+        System.out.println(commitId);
+    	String cyclomatic = String.valueOf(calulateAvgCyclomatic(commitId)); // Get the cyclomatic value and convert it into string
+		String returnVal = commitId + "CYCLOMATIC_VALUE_" + cyclomatic;
+		sendCommit(returnVal);}while(workQueue.size() > 0);
+    }
+    
     public class GetCyclomaticRunnable implements Runnable {
         
     	String commitId;
@@ -190,13 +208,12 @@ public class DetailRestController {
 		}
 
 		public void run(){
-			String cyclomatic = String.valueOf(calulateAvgCyclomatic(commitId)); // Get the cyclomatic value and convert it into string
-			String returnVal = commitId + "CYCLOMATIC_VALUE_" + cyclomatic;
-			sendCommit(returnVal);
-	    }
-	  }
+			System.out.println(workQueue.size());
+			workQueue.add(commitId);
+			startWork();
+		}
+	}
 
-	
 	@RequestMapping(value = "/GetCylomatic/{commitId}", method = RequestMethod.POST)
     @ResponseBody
     public void getCyclomatic (@PathVariable("commitId") String commitId) 
